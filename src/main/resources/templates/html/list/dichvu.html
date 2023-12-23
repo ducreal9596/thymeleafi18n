@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.thymeleaf.org">
 
 <head>
-	<title>Danh sách dịch vụ</title>
+	<title th:text="#{title.listDichVu}"></title>
 </head>
 
 <body sb-nav-fixed>
@@ -13,7 +13,7 @@
 			<main class="p-4">
 				<div class="row border m-1 pb-2 rounded-top">
 					<div class="bg-secondary p-2 text-light rounded-top">
-						<h1 class="border-bottom">Danh sách dịch vụ</h1>
+						<h1 class="border-bottom" th:text="#{title.listDichVu}"></h1>
 					</div>
 					<div class="col-12">
 						<form id="form-submit2" action="" method="GET" class="d-flex justify-content-end mt-3 mb-3">
@@ -23,12 +23,12 @@
 								<div class="col-6 d-flex align-items-center">
 									<div class="input-group">
 										<span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-										<input type="text" id="search" name="search" class="form-control" placeholder="Search"
+										<input type="text" id="search" name="search" class="form-control" th:placeholder="#{text.search}"
 											aria-describedby="basic-addon1" th:value="${search}" />
 									</div>
 								</div>
 								<div class="col-2 text-center">
-									<button type="button" id="btn-search" class="btn btn-info text-light fw-bold">Search</button>
+									<button type="button" id="btn-search" class="btn btn-info text-light fw-bold" th:text="#{text.search}"></button>
 								</div>
 							</div>
 						</form>
@@ -108,12 +108,8 @@
 		</div>
 	</div>
 
-	<script>
-		document.title = "Danh sách dịch vụ"
-	</script>
 
 	<script type="text/javascript" th:inline="javascript">
-		document.title = "Danh sách dịch vụ";
 		let currentPage = /*[(${currentPage})]*/ '';
 		let total = /*[(${totalPages})]*/ '';
 		let search = /*[[${search} ? ${search} : '']]*/ "";

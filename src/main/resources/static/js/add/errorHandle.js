@@ -23,7 +23,6 @@ inputAndSelectFields.forEach((field, index) => {
 const handleValidator = () => {
 	let hasErrors = false;
 	inputAndSelectFields.forEach((field, index) => {
-		const fieldType = field.type;
 		const value = field.value.trim();
 		const errorElement = forms[index];
 		const regexPattern = error[index].regex;
