@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thông tin sử dụng</title>
+  <div th:replace="~{html/header}"></div>
+</head>
+
+<body>
+  <div id="layoutSidenav">
+    <div th:replace="~{html/sidebar}"></div>
+    <div id="layoutSidenav_content">
+      <main class="p-4">
+        <div class="row border m-1 pb-2 rounded-top">
+          <div class="bg-secondary p-2 text-light rounded-top">
+            <h1 class="border-bottom">Thông tin sử dụng</h1>
+          </div>
+          <div class="col-12">
+            <form id="form-submit2" action="" method="GET" class="d-flex justify-content-end mt-3 mb-3">
+              <input type="hidden" id="page-search" name="page" th:value="${currentPage}" />
+              <input type="hidden" name="limit" th:value="${pageSize}" />
+
+              <div class="col-7 d-flex justify-content-end align-items-center">
+                <div class="col-6 d-flex align-items-center">
+                  <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <input type="text" id="search" name="search" class="form-control" placeholder="Search"
+                      aria-label="Username" aria-describedby="basic-addon1" th:value="${search}">
+                  </div>
+                </div>
+                <div class="col-2 text-center">
+                  <button type="button" id="btn-search" class="btn btn-info text-light fw-bold">Search</button>
+                </div>
+              </div>
+            </form>
+            <form action="" id="form-submit">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Mã KH</th>
+                    <th>Tên KH</th>
+                    <th>Mã Máy</th>
+                    <th>Vị trí</th>
+                    <th>Trạng Thái</th>
+                    <th>Ngày BĐ SDM</th>
+                    <th>Giờ BĐ SDM</th>
+                    <th>TG dùng</th>
+                    <th>Mã DV</th>
+                    <th>Ngày SDDV</th>
+                    <th>Giờ SDDV</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                  </tr>
+                </thead>
+                <tbody id="list-item">
+                  <tr th:each="em : ${modules}">
+                    <td th:text="${em.maKH}"></td>
+                    <td th:text="${em.tenKH}"></td>
+                    <td th:text="${em.maMay}"></td>
+                    <td th:text="${em.viTri}"></td>
+                    <td th:text="${em.trangThai}"></td>
+                    <td th:text="${em.ngayBatDauSuDungMay}"></td>
+                    <td th:text="${em.gioBatDauSuDungMay}"></td>
+                    <td th:text="${em.thoiGianSuDungMay}"></td>
+                    <td th:text="${em.maDV}"></td>
+                    <td th:text="${em.ngaySuDungDV}"></td>
+                    <td th:text="${em.gioSuDungDV}"></td>
+                    <td th:text="${em.soLuong}"></td>
+                    <td th:text="${em.tongTien}"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <nav aria-label="Page navigation">
+                <ul class="pagination" id="pagination"></ul>
+              </nav>
+              <input type="hidden" th:value="${currentPage}" id="page" name="page" />
+              <input type="hidden" th:value="${pageSize}" id="limit" name="limit" />
+            </form>
+          </div>
+          <div class="col-4"></div>
+        </div>
+      </main>
+      <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid px-4">
+          <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted" th:text="${'Copyright &copy; Ducreal 2023'}"></div>
+            <div>
+              <a href="#">Privacy Policy</a> &middot; <a href="#">Terms &amp; Conditions</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script type="text/javascript" th:inline="javascript">
+    document.title = "Danh sách khách hàng";
+    let currentPage = /*[(${currentPage})]*/ '';
+    let total = /*[(${totalPages})]*/ '';
+    let search = /*[[${search} ? ${search} : '']]*/ "";
+    const valueSearch = document.querySelector("#search");
+    $(document).ready(function () {
+      window.pagObj = $('#pagination').twbsPagination({
+        totalPages: total,
+        visiblePages: 10,
+        startPage: currentPage,
+        onPageClick: (e, page) => {
+          if (currentPage != page && search == "") {
+            e.preventDefault();
+            $("#limit").val(3);
+            $("#page").val(page);
+            $("#form-submit").submit();
+          } else if (currentPage != page && search != "") {
+            $("#limit").val(3);
+            $("#page-search").val(page);
+            valueSearch.value = search;
+            $("#form-submit2").submit();
+          }
+        }
+      });
+    });
+
+    const formSm = document.querySelector("#form-submit2");
+    const btnSearch = document.querySelector("#btn-search");
+    btnSearch.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (valueSearch.value !== "") {
+        formSm.submit();
+      }
+    });
+  </script>
+  <script th:src="|https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js|"></script>
+  <script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

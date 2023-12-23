@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.thymeleaf.org">
+
+<head>
+	<title>Danh sách dịch vụ</title>
+</head>
+
+<body sb-nav-fixed>
+	<div th:replace="~{html/header}"></div>
+	<div id="layoutSidenav">
+		<div th:replace="~{html/sidebar}"></div>
+		<div id="layoutSidenav_content">
+			<main class="p-4">
+				<div class="row border m-1 pb-2 rounded-top">
+					<div class="bg-secondary p-2 text-light rounded-top">
+						<h1 class="border-bottom">Danh sách dịch vụ</h1>
+					</div>
+					<div class="col-12">
+						<form id="form-submit2" action="" method="GET" class="d-flex justify-content-end mt-3 mb-3">
+							<input type="hidden" id="page-search" name="page" th:value="${currentPage}" />
+							<input type="hidden" name="limit" th:value="${pageSize}" />
+							<div class="col-7 d-flex justify-content-end align-items-center">
+								<div class="col-6 d-flex align-items-center">
+									<div class="input-group">
+										<span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+										<input type="text" id="search" name="search" class="form-control" placeholder="Search"
+											aria-describedby="basic-addon1" th:value="${search}" />
+									</div>
+								</div>
+								<div class="col-2 text-center">
+									<button type="button" id="btn-search" class="btn btn-info text-light fw-bold">Search</button>
+								</div>
+							</div>
+						</form>
+
+						<form action="" id="form-submit">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Tên</th>
+										<th>Đơn vị tính</th>
+										<th>Đơn Giá</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody id="list-item">
+									<div th:each="em,stat : ${modules}">
+										<tr>
+											<td th:text="${em.maDV}"></td>
+											<td th:text="${em.tenDV}"></td>
+											<td th:text="${em.donViTinh}"></td>
+											<td th:text="${em.donGia}"></td>
+											<td>
+												<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+													th:data-bs-target="'#exampleModal' + ${stat.index}">
+													<i class="fas fa-trash-alt"></i>
+												</button> <a th:href="@{/edit/dichvu/{maDV}(maDV=${em.maDV}, page=${currentPage})}"
+													title="Edit">
+													<button type="button" class="btn btn-primary">
+														<i class="fa-solid fa-pen-to-square"></i>
+													</button>
+												</a>
+											</td>
+										</tr>
+										<div class="modal fade" th:id="'exampleModal' + ${stat.index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+													<div class="modal-content">
+															<div class="modal-header">
+																	<h5 class="modal-title" id="exampleModalLabel">Xóa dịch vụ</h5>
+																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+															</div>
+															<div class="modal-body" th:text="'Xác nhận xóa dịch vụ có mã ' + ${em.maDV}"></div>
+															<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+																	<a th:href="@{/delete/dichvu/{maDV}(maDV=${em.maDV})}" title="Xóa">
+																			<button type="button" class="btn btn-danger">Xóa</button>
+																	</a>
+															</div>
+													</div>
+											</div>
+									</div>
+									
+									</div>
+								</tbody>
+							</table>
+							<nav aria-label="Page navigation">
+								<ul class="pagination" id="pagination"></ul>
+							</nav>
+							<input type="hidden" th:value="${currentPage}" id="page" name="page" /> <input type="hidden"
+								th:value="${pageSize}" id="limit" name="limit" />
+						</form>
+					</div>
+					<div class="col-4"></div>
+				</div>
+			</main>
+			<footer class="py-4 bg-light mt-auto">
+				<div class="container-fluid px-4">
+					<div class="d-flex align-items-center justify-content-between small">
+						<div class="text-muted">Copyright &copy; Ducreal 2023</div>
+						<div>
+							<a href="#">Privacy Policy</a> &middot; <a href="#">Terms
+								&amp; Conditions</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+	<script>
+		document.title = "Danh sách dịch vụ"
+	</script>
+
+	<script type="text/javascript" th:inline="javascript">
+		document.title = "Danh sách dịch vụ";
+		let currentPage = /*[(${currentPage})]*/ '';
+		let total = /*[(${totalPages})]*/ '';
+		let search = /*[[${search} ? ${search} : '']]*/ "";
+		const valueSearch = document.querySelector("#search");
+		$(document).ready(function () {
+			window.pagObj = $('#pagination').twbsPagination({
+				totalPages: total,
+				visiblePages: 10,
+				startPage: currentPage,
+				onPageClick: (e, page) => {
+					if (currentPage != page && search == "") {
+						e.preventDefault();
+						$("#limit").val(3);
+						$("#page").val(page);
+						$("#form-submit").submit();
+					} else if (currentPage != page && search != "") {
+						$("#limit").val(3);
+						$("#page-search").val(page);
+						valueSearch.value = search;
+						$("#form-submit2").submit();
+					}
+				}
+			});
+		});
+
+		const formSm = document.querySelector("#form-submit2");
+		const btnSearch = document.querySelector("#btn-search");
+		btnSearch.addEventListener("click", (e) => {
+			e.preventDefault();
+			if (valueSearch.value !== "") {
+				formSm.submit();
+			}
+		});
+	</script>
+
+	<script th:src="|https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js|"></script>
+	<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

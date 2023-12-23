@@ -1,0 +1,58 @@
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <a class="nav-link" th:href="@{/add/may}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-shuttle-space"></i>
+                    </div> Tạo mới máy
+                </a>
+                <a class="nav-link" th:href="@{/add/khachhang}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div> Tạo mới khách hàng
+                </a>
+                <a class="nav-link" th:href="@{/add/dichvu}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-brands fa-servicestack"></i>
+                    </div> Tạo mới dịch vụ
+                </a>
+                <a class="nav-link" th:href="@{/list/may?page=1&amp;limit=3}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-table"></i>
+                    </div> Danh sách máy
+                </a>
+                <a class="nav-link" th:href="@{/list/khachhang?page=1&amp;limit=3}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div> Danh sách khách hàng
+                </a>
+                <a class="nav-link" th:href="@{/list/dichvu?page=1&amp;limit=3}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-table"></i>
+                    </div> Danh sách dịch vụ
+                </a>
+                <a class="nav-link" th:href="@{/add/sudungmay}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-table"></i>
+                    </div> Đăng ký sử dụng máy
+                </a>
+                <a class="nav-link" th:href="@{/add/sudungdichvu}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-table"></i>
+                    </div> Đăng kí dùng dịch vụ
+                </a>
+                <a class="nav-link" th:href="@{/list/thongtinkhachhang?page=1&amp;limit=3}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div> Thông tin sử dụng
+                </a>
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            <div class="nav-item d-flex ">
+            </div>
+        </div>
+    </nav>
+</div>
