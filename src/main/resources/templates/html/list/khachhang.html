@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Danh sách khách hàng</title>
+  <title th:text="#{title.listKhachHang}"></title>
   <div th:replace="~{html/header}"></div>
 </head>
 
@@ -15,7 +15,7 @@
       <main class="p-4">
         <div class="row border m-1 pb-2 rounded-top">
           <div class="bg-secondary p-2 text-light rounded-top">
-            <h1 class="border-bottom">Danh sách khách hàng</h1>
+            <h1 class="border-bottom" th:text="#{title.listKhachHang}"> </h1>
           </div>
           <div class="col-12">
             <form id="form-submit2" action="" method="GET" class="d-flex justify-content-end mt-3 mb-3">
@@ -25,12 +25,12 @@
                 <div class="col-6 d-flex align-items-center">
                   <div class="input-group">
                     <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-                    <input type="text" id="search" name="search" class="form-control" placeholder="Search"
+                    <input type="text" id="search" name="search" class="form-control" th:placeholder="#{text.search}"
                       aria-label="Username" aria-describedby="basic-addon1" th:value="${search}" />
                   </div>
                 </div>
                 <div class="col-2 text-center">
-                  <button type="button" id="btn-search" class="btn btn-info text-light fw-bold">Search</button>
+                  <button type="button" id="btn-search" class="btn btn-info text-light fw-bold" th:text="#{text.search}"></button>
                 </div>
               </div>
             </form>
@@ -111,7 +111,6 @@
     </div>
   </div>
   <script type="text/javascript" th:inline="javascript">
-    document.title = "Danh sách khách hàng";
     let currentPage = /*[(${currentPage})]*/ '';
     let total = /*[(${totalPages})]*/ '';
     let search = /*[[${search} ? ${search} : '']]*/ "";
